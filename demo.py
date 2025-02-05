@@ -8,8 +8,10 @@ from test import prepare_im_data
 from yolov2 import Yolov2
 from yolo_eval import yolo_eval
 from util.visualize import draw_detection_boxes
+import matplotlib
 import matplotlib.pyplot as plt
 from util.network import WeightLoader
+matplotlib.use('TkAgg')
 
 
 def parse_args():
