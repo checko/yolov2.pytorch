@@ -12,7 +12,6 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.autograd import Variable
 
 from config import config as cfg
 from darknet import Darknet19
@@ -109,7 +108,7 @@ class Yolov2(nn.Module):
             gt_data = (gt_boxes, gt_classes, num_boxes)
             target_data = build_target(output_data, gt_data, h, w)
 
-            target_variable = [Variable(v) for v in target_data]
+            target_variable = [v.detach() for v in target_data]
             box_loss, iou_loss, class_loss = yolo_loss(output_variable, target_variable)
 
             return box_loss, iou_loss, class_loss
@@ -119,7 +118,7 @@ class Yolov2(nn.Module):
 if __name__ == '__main__':
     model = Yolov2()
     im = np.random.randn(1, 3, 416, 416)
-    im_variable = Variable(torch.from_numpy(im)).float()
+    im_variable = torch.from_numpy(im).float()
     out = model(im_variable)
     delta_pred, conf_pred, class_pred = out
     print('delta_pred size:', delta_pred.size())
