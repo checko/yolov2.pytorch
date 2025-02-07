@@ -10,7 +10,6 @@ import time
 import torch
 import torch.nn as nn
 
-from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from dataset.factory import get_imdb
 from dataset.roidb import RoiDataset, detection_collate
@@ -186,7 +185,7 @@ def train():
                 gt_classes = gt_classes.cuda()
                 num_obj = num_obj.cuda()
 
-            im_data_variable = Variable(im_data)
+            im_data_variable = im_data
 
             box_loss, iou_loss, class_loss = model(im_data_variable, boxes, gt_classes, num_obj, training=True)
 

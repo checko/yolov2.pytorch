@@ -4,7 +4,6 @@ import time
 import numpy as np
 import pickle
 import torch
-from torch.autograd import Variable
 from PIL import Image
 from yolov2 import Yolov2
 from dataset.factory import get_imdb
@@ -123,9 +122,9 @@ def test():
     with torch.no_grad():
         for batch, (im_data, im_infos) in enumerate(val_dataloader):
             if args.use_cuda:
-                im_data_variable = Variable(im_data).cuda()
+                im_data_variable = im_data.cuda()
             else:
-                im_data_variable = Variable(im_data)
+                im_data_variable = im_data
 
             yolo_outputs = model(im_data_variable)
             for i in range(im_data.size(0)):

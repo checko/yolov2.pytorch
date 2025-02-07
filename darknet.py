@@ -10,7 +10,6 @@ from __future__ import print_function
 
 import torch.nn as nn
 import numpy as np
-from torch.autograd import Variable
 import torch
 import torch.nn.functional as F
 from util.network import WeightLoader
@@ -155,7 +154,7 @@ class Darknet19(nn.Module):
 
 if __name__ == '__main__':
     im = np.random.randn(1, 3, 224, 224)
-    im_variable = Variable(torch.from_numpy(im)).float()
+    im_variable = torch.from_numpy(im).float()
     model = Darknet19()
     out = model(im_variable)
     print(out.size())

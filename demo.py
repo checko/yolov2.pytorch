@@ -2,7 +2,6 @@ import os
 import argparse
 import time
 import torch
-from torch.autograd import Variable
 from PIL import Image
 from test import prepare_im_data
 from yolov2 import Yolov2
@@ -67,9 +66,9 @@ def demo():
         im_data, im_info = prepare_im_data(img)
 
         if args.use_cuda:
-            im_data_variable = Variable(im_data).cuda()
+            im_data_variable = im_data.cuda()
         else:
-            im_data_variable = Variable(im_data)
+            im_data_variable = im_data
 
         tic = time.time()
 
