@@ -46,7 +46,7 @@ def parse_args():
     parser.add_argument('--save_interval', dest='save_interval',
                         default=20, type=int)
     parser.add_argument('--cuda', dest='use_cuda',
-                        default=False, type=bool)
+                        default=True, type=bool)
     parser.add_argument('--resume', dest='resume',
                         default=False, type=bool)
     parser.add_argument('--checkpoint_epoch', dest='checkpoint_epoch',

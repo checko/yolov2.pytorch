@@ -28,7 +28,7 @@ weight_decay = 0.0005
 
 # multi-scale training:
 # {k: epoch, v: scale range}
-multi_scale = True
+multi_scale = False
 
 # number of steps to change input size
 scale_step = 40
