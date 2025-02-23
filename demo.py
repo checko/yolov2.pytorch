@@ -22,7 +22,7 @@ def parse_args():
     parser.add_argument('--model_name', dest='model_name',
                         default='yolov2_epoch_160', type=str)
     parser.add_argument('--cuda', dest='use_cuda',
-                        default=False, type=bool)
+                        default=True, type=bool)
 
     args = parser.parse_args()
     return args
