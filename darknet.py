@@ -55,7 +55,7 @@ class Darknet19(nn.Module):
 
     def __init__(self, num_classes=1000):
         super(Darknet19, self).__init__()
-        self.in_channels = 3
+        self.in_channels = 4
 
         self.layer0 = self._make_layers(self.cfg['layer0'])
         self.layer1 = self._make_layers(self.cfg['layer1'])

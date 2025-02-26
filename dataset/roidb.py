@@ -28,6 +28,35 @@ class RoiDataset(Dataset):
         gt_classes = self._roidb[i]['gt_classes']
 
         return im_data, boxes, gt_classes
+    
+    def add_center_mask(self, image_tensor, boxes):
+    
+        height = image_tensor.size()[1]
+        width  = image_tensor.size()[2]
+
+        mask = torch.zeros( 1, height, width, dtype=torch.float32,device = image_tensor.device)
+
+    
+        for box in boxes:
+            x1 = int(box[0] * width)
+            y1 = int(box[1] * height)
+            x2 = int(box[2] * width)
+            y2 = int(box[3] * height)
+
+            center_x = (x1+x2) // 2
+            center_y = (y1+y2) // 2
+
+            x_star = max(0, center_x-1)
+            x_end  = min(width, center_x+1)
+            y_star = max(0, center_y-1)
+            y_end  = min(height, center_y+1)
+
+            mask[0,y_star:y_end+1, x_star:x_end+1] = 1.0
+
+        final_tensor = torch.cat([image_tensor, mask],dim=0)
+
+        return final_tensor
+
 
     def __getitem__(self, i):
         im_data, boxes, gt_classes = self.roi_at(i)
@@ -49,6 +78,7 @@ class RoiDataset(Dataset):
             boxes = torch.from_numpy(boxes)
             gt_classes = torch.from_numpy(gt_classes)
             num_obj = torch.Tensor([boxes.size(0)]).long()
+            im_data_resize = self.add_center_mask(im_data_resize, boxes)
             return im_data_resize, boxes, gt_classes, num_obj
 
         else:

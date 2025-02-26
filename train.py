@@ -125,7 +125,7 @@ def train():
     # initialize the model
     print('initialize the model')
     tic = time.time()
-    model = Yolov2(weights_file=args.pretrained_model)
+    model = Yolov2()
     toc = time.time()
     print('model loaded: cost time {:.2f}s'.format(toc-tic))
 
